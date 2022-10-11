@@ -74,7 +74,8 @@ CREATE TABLE IF NOT EXISTS Trans_List (
     '当前司机号' TEXT,
     '当前状态' TEXT,
     '更新时间' TEXT,
-    '映射' INTEGER
+    '映射' INTEGER,
+    '主单号' TEXT,
 )
 ''')
 con.commit()
@@ -132,6 +133,7 @@ if bt1 :
         if js['status'] == 'SUCCESS' :
             tracking_number = js['data']['tracking']['tno']
             sub_batch = js['data']['orders']['sub_referer']
+            main_batch = js['data']['orders']['reference']
             driver_id = js['data']['orders']['shipping_staff_id']
             current_stat = js['data']['orders']['latest_status']
             three_post = js['data']['orders']['zipcode'][:3]
@@ -151,7 +153,7 @@ if bt1 :
             current_stat = 'N/A'
             the_time = 'N/A'
             pot = 'N/A'
-        cur.execute("INSERT INTO Trans_List (单号,子批次,当前司机号,当前状态,更新时间,映射) VALUES (?,?,?,?,?,?)",(tracking_number,sub_batch,driver_id,current_stat,the_time,pot))
+        cur.execute("INSERT INTO Trans_List (单号,子批次,当前司机号,当前状态,更新时间,映射,主单号) VALUES (?,?,?,?,?,?,?)",(tracking_number,sub_batch,driver_id,current_stat,the_time,pot,main_batch))
         con.commit()
         cll1.write(tracking_number)
         cll2.write(sub_batch)
