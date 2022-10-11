@@ -40,30 +40,6 @@ div.stButton > button:hover {
 st.sidebar.image('./pages/setup/images/aba_icon2.jpg', width=100)
 st.sidebar.title("程序运行详情")
 
-conn = sqlite3.connect('./pages/setup/data/sql/postcode.sqlite')
-curr = conn.cursor()
-curr.executescript('''
-DROP TABLE IF EXISTS Post_List;
-CREATE TABLE IF NOT EXISTS Post_List (
-    'id' INTEGER,
-    'route_no' INTEGER,
-    'zipcode' TEXT,
-    'sorting_zone' INTEGER,
-    'price' TEXT,
-    'city' INTEGER,
-    'area' TEXT,
-    'segment' TEXT,
-    'owner' TEXT,
-    'is_remote' INTEGER,
-    'is_enabled' INTEGER,
-    'pattern_id' INTEGER
-)
-''')
-conn.commit()
-df = pd.read_excel('./pages/setup/data/important/post.xlsx')
-df.to_sql('Post_List', conn, if_exists='append', index=False)
-conn.commit()
-
 con = sqlite3.connect('./pages/setup/data/sql/查单.sqlite')
 cur = con.cursor()
 cur.executescript('''
@@ -75,7 +51,7 @@ CREATE TABLE IF NOT EXISTS Trans_List (
     '当前状态' TEXT,
     '更新时间' TEXT,
     '映射' INTEGER,
-    '主单号' TEXT,
+    '主单号' TEXT
 )
 ''')
 con.commit()
