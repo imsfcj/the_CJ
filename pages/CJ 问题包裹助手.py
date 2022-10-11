@@ -183,7 +183,10 @@ if bt1 :
                     else : alteration_person.append(lin['operator'])
              #st.write(alteration_person)
             #仓储
-            if len(js['data']['tracking']['storage_info']) == 0 : storage_info = nope
+            try:
+                if len(js['data']['tracking']['storage_info']) == 0 : storage_info = nope
+            except :
+                if js['data']['tracking']['storage_info'] is None : storage_info = nope
             else : storage_info = js['data']['tracking']['storage_info']
              #st.write(storage_info)
             #大区
