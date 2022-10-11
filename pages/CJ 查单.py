@@ -109,7 +109,7 @@ if bt1 :
         if js['status'] == 'SUCCESS' :
             tracking_number = js['data']['tracking']['tno']
             sub_batch = js['data']['orders']['sub_referer']
-            main_batch = js['data']['orders']['reference']
+            main_batch = js['data']['tracking']['reference']
             driver_id = js['data']['orders']['shipping_staff_id']
             current_stat = js['data']['orders']['latest_status']
             three_post = js['data']['orders']['zipcode'][:3]
