@@ -98,6 +98,10 @@ cll1,cll2,cll3,cll4,cll5,cll6 = st.columns(6)
 
 if bt1 :
     st.sidebar.write('\n -----     准备中     ----- ')
+    my_bar = main_container.progress(0)
+    percent_complete = 1 / len(h)
+    #percent_complete = round(percent_complete,1)
+    x = 0
     h = text.split('\n')
     url_head = 'https://map.cluster.uniexpress.org/map/getorderdetail?tno='
     for line in h :
@@ -137,6 +141,8 @@ if bt1 :
         cll4.write(str(current_stat))
         cll5.write(the_time)
         cll6.write(pot)
+        x = x + percent_complete
+        my_bar.progress(x)
 
     rq = '''
     SELECT * FROM Trans_List
