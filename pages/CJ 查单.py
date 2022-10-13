@@ -124,7 +124,7 @@ if bt1 :
 
             if current_stat == '190' : the_time = datetime.fromtimestamp(js['data']['orders']['latest_update_time']).strftime("%Y-%m-%d %H:%M:%S")
             else :
-                the_time = datetime.fromtimestamp(js['data']['orders']['latest_update_time']) + timedelta(hours=4)
+                the_time = datetime.fromtimestamp(js['data']['orders']['latest_update_time'])
                 the_time = the_time.strftime("%Y-%m-%d %H:%M:%S")
         else :
             tracking_number = line
