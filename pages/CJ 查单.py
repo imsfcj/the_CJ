@@ -113,7 +113,7 @@ if bt1 :
         data = uh.read().decode()
         js = json.loads(data)
         if js['status'] == 'SUCCESS' :
-            st.write(js)
+            #st.write(js)
             tracking_number = js['data']['tracking']['tno']
             sub_batch = js['data']['orders']['sub_referer']
             main_batch = js['data']['tracking']['reference']
