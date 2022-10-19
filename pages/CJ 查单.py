@@ -51,7 +51,9 @@ CREATE TABLE IF NOT EXISTS Trans_List (
     '当前状态' TEXT,
     '更新时间' TEXT,
     '映射' INTEGER,
-    '主单号' TEXT
+    '主单号' TEXT,
+    '仓库' INTEGER,
+    '重量' TEXT
 )
 ''')
 con.commit()
@@ -118,10 +120,12 @@ if bt1 :
             driver_id = js['data']['orders']['shipping_staff_id']
             current_stat = js['data']['orders']['latest_status']
             three_post = js['data']['orders']['zipcode'][:3]
+            the_house = js['data']['tracking']['warehouse']
+            the_weight = js['data']['tracking']['total_weight']
             try:
                 pot = curr.execute('SELECT route_no FROM Post_List WHERE zipcode = ?',(three_post,)).fetchone()[0]
                 conn.commit()
-            except: pot = 'N/A'
+            except: pot = '0'
 
             if current_stat == '190' : the_time = datetime.fromtimestamp(js['data']['orders']['latest_update_time']).strftime("%Y-%m-%d %H:%M:%S")
             else :
@@ -133,8 +137,10 @@ if bt1 :
             driver_id = 'N/A'
             current_stat = 'N/A'
             the_time = 'N/A'
-            pot = 'N/A'
-        cur.execute("INSERT INTO Trans_List (单号,子批次,当前司机号,当前状态,更新时间,映射,主单号) VALUES (?,?,?,?,?,?,?)",(tracking_number,sub_batch,driver_id,current_stat,the_time,pot,main_batch))
+            pot = '0'
+            the_house = '0'
+            the_weight = 'N/A'
+        cur.execute("INSERT INTO Trans_List (单号,子批次,当前司机号,当前状态,更新时间,映射,主单号,仓库,重量) VALUES (?,?,?,?,?,?,?,?,?)",(tracking_number,sub_batch,driver_id,current_stat,the_time,pot,main_batch,the_house,the_weight))
         con.commit()
         cll1.write(tracking_number)
         cll2.write(sub_batch)
