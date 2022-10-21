@@ -149,6 +149,7 @@ if bt1 :
         cll5.write(the_time)
         cll6.write(pot)
         x = x + percent_complete
+        if x >= 1 : x = 1
         my_bar.progress(x)
 
     rq = '''
