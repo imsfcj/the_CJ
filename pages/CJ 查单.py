@@ -65,7 +65,7 @@ curr.executescript('''
 DROP TABLE IF EXISTS Post_List;
 CREATE TABLE IF NOT EXISTS Post_List (
     'id' INTEGER,
-    'route_no' INTEGER,
+    'route_no' TEXT,
     'zipcode' TEXT,
     'sorting_zone' INTEGER,
     'price' TEXT,
