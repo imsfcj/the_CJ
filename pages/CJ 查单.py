@@ -132,7 +132,7 @@ if bt1 :
             if current_stat == '190' : the_time = datetime.fromtimestamp(js['data']['orders']['latest_update_time']).strftime("%Y-%m-%d %H:%M:%S")
             else :
                 try :
-                    the_time = datetime.fromtimestamp(js['data']['orders']['latest_update_time']) - timedelta(hours=4)
+                    the_time = datetime.fromtimestamp(js['data']['orders']['latest_update_time']) - timedelta(hours=3)
                     the_time = the_time.strftime("%Y-%m-%d %H:%M:%S")
                 except : the_time = 'N/A'
         else :
