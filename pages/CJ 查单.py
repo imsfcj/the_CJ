@@ -1,5 +1,5 @@
 import streamlit as st
-import sqlite3, os, time, re, pytz, json, ssl
+import sqlite3, os, time, re, pytz, json, ssl, requests
 from io import BytesIO
 #from pyxlsb import open_workbook as open_xlsb
 import pandas as pd
@@ -7,9 +7,6 @@ from datetime import datetime, timedelta
 import urllib.request, urllib.parse, urllib.error
 
 tz = pytz.timezone('America/Toronto')
-ctx = ssl.create_default_context()
-ctx.check_hostname = False
-ctx.verify_mode = ssl.CERT_NONE
 
 def to_excel(df):
     output = BytesIO()
@@ -106,13 +103,34 @@ if bt1 :
     percent_complete = 1 / len(h)
     #percent_complete = round(percent_complete,1)
     x = 0
-    url_head = 'https://map.cluster.uniexpress.org/map/getorderdetail?tno='
+    #url_head = 'https://map.cluster.uniexpress.org/map/getorderdetail?tno='
     for line in h :
-        if len(line) <= 4 : continue
-        url = url_head + line
-        uh = urllib.request.urlopen(url, context=ctx)
-        data = uh.read().decode()
-        js = json.loads(data)
+        headers = {
+            'authority': 'map.cluster.uniexpress.org',
+            'accept': 'application/json',
+            'accept-language': 'en-US,en;q=0.9,zh-CN;q=0.8,zh;q=0.7',
+            'access-control-allow-credentials': 'true',
+            'access-control-allow-headers': 'Origin, X-Requested-With, Content-Type, Accept, origin, content-type, accept',
+            'access-control-allow-methods': 'GET, PUT, POST, DELETE, OPTIONS',
+            'access-control-allow-origin': '*',
+            'authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbWFwLmNsdXN0ZXIudW5pZXhwcmVzcy5vcmcvbWFwL2xvZ2luIiwiaWF0IjoxNjY5MDkzMzQ0LCJleHAiOjE2NjkxNzk3NDQsIm5iZiI6MTY2OTA5MzM0NCwianRpIjoidGI5RVZobmRGUXNKeVNmbCIsInN1YiI6MjE3LCJwcnYiOiJlOGNmNTQ2ZTZiNTNmMmIxOWY3ZTQ1OWJkMzEyZjcxMTQwODkxMzllIiwiaWQiOjIxNywibW9kZWwiOiJlY3NfY3NfYWNjb3VudCIsInJvbGVzIjpbIkRyaXZlciBBZG1pbmlzdHJhdG9yIiwiSW5jaWRlbnQgTWFuYWdlbWVudCJdLCJ1aV9hYmlsaXRpZXMiOlsxLDIsMyw0LDUsNiw3LDgsOSwxMCwxMSwxMiwxMywxNSwxNiwxNywxOCwxOSwyMiwyMywzMDEsMzAzLDMwMiwzMDQsMzIsMjcsMzFdLCJ3YXJlaG91c2UiOlsiMiIsIjIwIiwiMTAiLCI5Il0sInVzX2ZsYWciOmZhbHNlfQ.mYsEWO_TU9JfMTq8BRa18GmvWYW7v8txJAYqCqX47L0',
+            'origin': 'https://unimap.cluster.uniexpress.org',
+            'referer': 'https://unimap.cluster.uniexpress.org/',
+            'sec-ch-ua': '"Google Chrome";v="107", "Chromium";v="107", "Not=A?Brand";v="24"',
+            'sec-ch-ua-mobile': '?0',
+            'sec-ch-ua-platform': '"Windows"',
+            'sec-fetch-dest': 'empty',
+            'sec-fetch-mode': 'cors',
+            'sec-fetch-site': 'same-site',
+            'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36',
+        }
+        #x = 'MBORDU7012624903'
+        params = {
+            'tno': line,
+        }
+
+        response = requests.get('https://map.cluster.uniexpress.org/map/getorderdetail', params=params, headers=headers)
+        js = json.loads(response.content)
         if js['status'] == 'SUCCESS' :
             #st.write(js)
             tracking_number = js['data']['tracking']['tno']
