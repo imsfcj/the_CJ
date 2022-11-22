@@ -105,6 +105,7 @@ if bt1 :
     x = 0
     #url_head = 'https://map.cluster.uniexpress.org/map/getorderdetail?tno='
     for line in h :
+        if len(line) < 3 : continue
         headers = {
             'authority': 'map.cluster.uniexpress.org',
             'accept': 'application/json',
