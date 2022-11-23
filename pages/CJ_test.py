@@ -1,7 +1,7 @@
 import streamlit as st
 import sqlite3, os, time, re, pytz, json, ssl
 from io import BytesIO
-from pyxlsb import open_workbook as open_xlsb
+#from pyxlsb import open_workbook as open_xlsb
 import pandas as pd
 from datetime import datetime, timedelta
 import urllib.request, urllib.parse, urllib.error
