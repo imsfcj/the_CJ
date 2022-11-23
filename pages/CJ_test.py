@@ -11,7 +11,7 @@ form1 = st.form(key="Options")
 main_container = st.container()
 main_container.write("")
 form1.title("查单助手")
-text = form1.text_area("请直接输入查单单号： ")
+text = form1.text_input("请直接输入查单单号： ")
 bt1 = form1.form_submit_button("开始 查单")
 
 if bt1 :
