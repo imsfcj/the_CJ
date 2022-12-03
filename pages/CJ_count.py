@@ -27,4 +27,5 @@ for row in rows:
     alist[row[0]] = row[1]
 st.write(alist)
 
-new_work = conn.duplicate_sheet(source_sheet_id=102342791, new_sheet_name='the_new_sheet')
+new_week = gspread.authorize(credentials)
+new_week.copy("1U9AtBpN1BJweufhofeyYBMtcfg3uEbdGh7TEJ89O95c", title="asd", copy_permissions=True)
