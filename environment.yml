@@ -3,7 +3,7 @@ channels:
 dependencies:
     - xlsxwriter
     - openpyxl
-    - google
+    - gsheetsdb
 
 
 
