@@ -4,7 +4,9 @@ dependencies:
     - xlsxwriter
     - openpyxl
     - gsheetsdb
-    - gspread-pandas
+    - pip
+    - pip:
+        - gspread-pandas
 
 
 
