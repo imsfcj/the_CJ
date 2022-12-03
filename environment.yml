@@ -4,6 +4,6 @@ dependencies:
     - xlsxwriter
     - openpyxl
     - google
-    - gsheetsdb
+
 
 
