@@ -1,6 +1,7 @@
 # streamlit_app.py
 
 import streamlit as st
+import gsheetsdb
 from google.oauth2 import service_account
 from gsheetsdb import connect
 
