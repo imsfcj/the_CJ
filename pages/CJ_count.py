@@ -1,8 +1,8 @@
 # streamlit_app.py
 
 import streamlit as st
-import gspread
-from gspread import Cell, Spreadsheet
+from pandas import DataFrame
+from gspread_pandas import Spread,Client
 from google.oauth2 import service_account
 from gsheetsdb import connect
 
@@ -11,9 +11,15 @@ credentials = service_account.Credentials.from_service_account_info(
     st.secrets["gcp_service_account"],
     scopes=[
         "https://www.googleapis.com/auth/spreadsheets",
+        'https://spreadsheets.google.com/feeds',
+        'https://www.googleapis.com/auth/drive'
     ],
 )
 conn = connect(credentials=credentials)
+
+spreadsheetname = "司机一周统计表"
+spread = Spread(spreadsheetname,client = client)
+st.write(spread.url)
 
 @st.cache(ttl=600)
 def run_query(query):
@@ -29,5 +35,3 @@ for row in rows:
     alist[row[0]] = row[1]
 st.write(alist)
 
-new_week = gspread.authorize(credentials)
-new_week.copy("1U9AtBpN1BJweufhofeyYBMtcfg3uEbdGh7TEJ89O95c", title="asd", copy_permissions=True)
