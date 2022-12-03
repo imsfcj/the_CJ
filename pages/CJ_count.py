@@ -2,7 +2,7 @@
 
 import streamlit as st
 import gspread
-from gspread.models import Cell, Spreadsheet
+from gspread import Cell, Spreadsheet
 from google.oauth2 import service_account
 from gsheetsdb import connect
 
