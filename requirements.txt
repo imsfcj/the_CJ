@@ -1,2 +1,0 @@
-# requirements.txt
-gsheetsdb==0.1.13.1
