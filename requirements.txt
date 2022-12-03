@@ -1,1 +1,0 @@
-gspread_pandas==3.2.2
