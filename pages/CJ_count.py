@@ -26,3 +26,5 @@ alist = {}
 for row in rows:
     alist[row[0]] = row[1]
 st.write(alist)
+
+new_work = conn.duplicate_sheet(source_sheet_id=102342791, new_sheet_name='the_new_sheet')
