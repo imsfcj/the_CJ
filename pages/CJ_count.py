@@ -1,7 +1,8 @@
 # streamlit_app.py
 
 import streamlit as st
-import gsheetsdb
+import gspread
+from gspread.models import Cell, Spreadsheet
 from google.oauth2 import service_account
 from gsheetsdb import connect
 
