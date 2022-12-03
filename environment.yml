@@ -3,6 +3,6 @@ channels:
 dependencies:
     - xlsxwriter
     - openpyxl
-    - selenium
+    - google
 
 
