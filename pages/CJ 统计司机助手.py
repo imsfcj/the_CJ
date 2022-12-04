@@ -165,7 +165,7 @@ if bt2 :
             df.to_sql('Import_List', con, if_exists='append', index=False)
             con.commit()
         except :
-            df = pd.read_csv(uploaded_file,header=None,names=["driver","pickup_day"],skiprows=1,usecols=[1,2], encoding='utf-8', errors='ignore')
+            df = pd.read_csv(uploaded_file,header=None,names=["driver","pickup_day"],skiprows=1,usecols=[1,2], encoding='utf-8')
             df.to_sql('Import_List', con, if_exists='append', index=False)
             con.commit()
 
