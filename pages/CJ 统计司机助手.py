@@ -3,6 +3,10 @@ import sqlite3, os, time, re, pytz
 from io import BytesIO
 from datetime import datetime
 import pandas as pd
+from pandas import DataFrame
+#from gspread_pandas import Spread,Client
+from google.oauth2 import service_account
+from gsheetsdb import connect
 #from pyxlsb import open_workbook as open_xlsb
 
 the_day = datetime.today().strftime('%A')[:3]
@@ -106,9 +110,35 @@ df = pd.read_sql (rq, con)
 #path = r'C:\Users\Jason_Cang\Desktop\py\dispatch\check'
 df.to_excel('./pages/setup/data/important/day_out.xlsx', index = False)
 
-df = pd.read_csv('./pages/setup/data/important/driver.csv')
-df.to_sql('Driver_List', con, if_exists='append', index=False)
-con.commit()
+credentials = service_account.Credentials.from_service_account_info(
+    st.secrets["gcp_service_account"],
+    scopes=[
+        "https://www.googleapis.com/auth/spreadsheets",
+        'https://spreadsheets.google.com/feeds',
+        'https://www.googleapis.com/auth/drive'
+    ],
+)
+conn = connect(credentials=credentials)
+@st.cache(ttl=600)
+def run_query(query):
+    rows = conn.execute(query, headers=1)
+    rows = rows.fetchall()
+    return rows
+
+sheet_url = st.secrets["private_gsheets_url"]
+rows = run_query(f'SELECT * FROM "{sheet_url}"')
+
+alist = {}
+for row in rows:
+    alist[row[0]] = row[1]
+
+for dri,are in alist.items():
+    cur.execute("INSERT INTO All_List (Driver,Area) VALUES (?,?)",(dri,are))
+    con.commit()
+
+#df = pd.read_csv('./pages/setup/data/important/driver.csv')
+#df.to_sql('Driver_List', con, if_exists='append', index=False)
+#con.commit()
 
 st.title("统计司机助手")
 tab1,tab2 = st.tabs(["每日统计","一周统计"])
