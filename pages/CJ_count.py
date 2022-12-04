@@ -17,9 +17,9 @@ credentials = service_account.Credentials.from_service_account_info(
 )
 conn = connect(credentials=credentials)
 
-spreadsheetname = "司机一周统计表"
-spread = Spread(spreadsheetname,client = client)
-st.write(spread.url)
+#spreadsheetname = "司机一周统计表"
+#spread = Spread(spreadsheetname,client = client)
+#st.write(spread.url)
 
 @st.cache(ttl=600)
 def run_query(query):
