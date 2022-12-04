@@ -5,7 +5,7 @@ dependencies:
     - openpyxl
     - gsheetsdb
     - gspread
-    - gspread-pandas
+
 
 
 
