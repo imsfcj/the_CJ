@@ -133,7 +133,7 @@ for row in rows:
     alist[row[0]] = row[1]
 
 for dri,are in alist.items():
-    cur.execute("INSERT INTO All_List (Driver,Area) VALUES (?,?)",(dri,are))
+    cur.execute("INSERT INTO Driver_List (Driver,Area) VALUES (?,?)",(dri,are))
     con.commit()
 
 #df = pd.read_csv('./pages/setup/data/important/driver.csv')
