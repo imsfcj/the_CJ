@@ -20,4 +20,4 @@ if the_new :
     old_title = "template"
     new_title = "the_new_sheet"
     index = 1  # Insert the new sheet at index 1
-    client.duplicate_sheet(spreadsheet, old_title, new_title, index)
+    client.copy_sheet(spreadsheet, old_title, new_title, index)
