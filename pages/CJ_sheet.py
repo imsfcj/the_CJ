@@ -98,7 +98,7 @@ spreadsheetname = "司机一周统计表"
 spread = Spread(spreadsheetname,client = client)
 sh = client.open(spreadsheetname)
 schedule_sheet = sh.worksheet(this_week)
-df = schedlue_sheet.sheet_to_df(columns=['Driver', 'Location', the_pick])
+df = schedule_sheet.sheet_to_df(columns=['Driver', 'Location', the_pick])
 day_driver = df.to_dict()
 st.write(day_driver)
 
