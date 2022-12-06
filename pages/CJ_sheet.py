@@ -23,6 +23,6 @@ if the_new :
     new_title = "the_new_sheet"
     index = 1  # Insert the new sheet at index 1
     worksheet = sh.worksheet('template')
-    worksheet_id = worksheet.id
+    worksheet_id = '1U9AtBpN1BJweufhofeyYBMtcfg3uEbdGh7TEJ89O95c/edit#gid=102342791'
     st.write(worksheet_id)
-    #sh.duplicate_sheet(worksheet_id, new_title, index)
+    sh.duplicate_sheet(worksheet_id, new_title, index)
