@@ -16,7 +16,14 @@ ending_date = starting_date + timedelta(days=6)
 st.write(f"Week starting: {starting_date.strftime('%b %d, %Y')}")
 st.write(f"Week ending: {ending_date.strftime('%b %d, %Y')}")
 
-next_week_start = today + relativedelta(weeks=1)
-next_week_end = next_week_start + relativedelta(weeks=1)
+one_week = relativedelta(weeks=1)
 
-st.write(f"Next week starts on {next_week_start.strftime('%A, %B %d')} and ends on {next_week_end.strftime('%A, %B %d')}.")
+# Get next Monday
+next_monday = today + relativedelta(weekday=relativedelta.MO(1))
+
+# Get next Sunday
+next_sunday = next_monday + relativedelta(days=6)
+
+# Print the dates
+st.write("Next Monday:", next_monday.strftime("%Y-%m-%d"))
+st.write("Next Sunday:", next_sunday.strftime("%Y-%m-%d"))
