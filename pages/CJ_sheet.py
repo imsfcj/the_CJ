@@ -99,9 +99,8 @@ spread = Spread(spreadsheetname,client = client)
 sh = client.open(spreadsheetname)
 #schedule_sheet = sh.worksheet(this_week)
 df = spread.sheet_to_df(index=0,sheet=this_week)
-df = df.DataFrame(columns=['Driver', 'Location', the_day])
-#day_driver = df.to_dict()
-st.write(df)
+day_driver = df.loc['Driver', 'Location', the_day]
+st.write(day_driver)
 
 
 
