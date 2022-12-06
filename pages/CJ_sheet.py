@@ -97,9 +97,9 @@ client = Client(scope=scope,creds=credentials)
 spreadsheetname = "司机一周统计表"
 spread = Spread(spreadsheetname,client = client)
 sh = client.open(spreadsheetname)
-schedule_sheet = sh.worksheet(this_week)
-df = schedule_sheet.col_values('driver')
-day_driver = df.to_dict()
+#schedule_sheet = sh.worksheet(this_week)
+df = schedule_sheet.sheet_to_df(sheet=this_week)
+#day_driver = df.to_dict()
 st.write(df)
 
 
