@@ -1,24 +1,18 @@
 import streamlit as st 
-from pandas import DataFrame
-from gspread_pandas import Spread,Client
-from google.oauth2 import service_account
 
-scope = ['https://spreadsheets.google.com/feeds',
-         'https://www.googleapis.com/auth/drive']
+from datetime import date, timedelta
 
-credentials = service_account.Credentials.from_service_account_info(
-                st.secrets["gcp_service_account"], scopes = scope)
-client = Client(scope=scope,creds=credentials)
-spreadsheetname = "司机一周统计表"
-spread = Spread(spreadsheetname,client = client)
+today = date.today()
 
-# Check the connection
-st.write(spread.url)
+# Get the year, week number, and day of the week
+year, week_number, day_of_week = today.isocalendar()
 
-sh = client.open(spreadsheetname)
+# Calculate the starting date of the week (Monday)
+starting_date = today - timedelta(days=day_of_week-1)
 
-the_new = st.button('new')
-if the_new :
-    the_sheets = sh.worksheet('template')
-    the_sheets.duplicate(insert_sheet_index=None, new_sheet_id=None, new_sheet_name=None)
+# Calculate the ending date of the week (Sunday)
+ending_date = starting_date + timedelta(days=6)
+
+print(f"Week starting: {start_date.strftime('%B %d, %Y')}")
+print(f"Week ending: {end_date.strftime('%B %d, %Y')}")
 
