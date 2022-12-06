@@ -9,6 +9,22 @@ from gspread_pandas import Spread,Client
 from google.oauth2 import service_account
 from gsheetsdb import connect
 
+st.set_page_config(page_title='CJ sheet助手',page_icon = "🛐" ,initial_sidebar_state = 'expanded')
+m = st.markdown("""
+<style>
+div.stButton > button:first-child {
+    background-color: #b5a2c8;
+    color:#ffffff;
+}
+div.stButton > button:hover {
+    background-color: #C8A2C8;
+    color:#ff0000;
+    }
+</style>""", unsafe_allow_html=True)
+
+st.sidebar.image('./pages/setup/images/aba_icon6.jpg', width=100)
+st.sidebar.title("程序运行详情")
+
 def to_excel(df):
     output = BytesIO()
     writer = pd.ExcelWriter(output, engine='xlsxwriter')
@@ -55,21 +71,6 @@ if the_day == 'Fri' : the_pick = 5
 if the_day == 'Sat' : the_pick = 6
 if the_day == 'Sun' : the_pick = 6
 
-st.set_page_config(page_title='CJ sheet助手',page_icon = "🛐" ,initial_sidebar_state = 'expanded')
-m = st.markdown("""
-<style>
-div.stButton > button:first-child {
-    background-color: #b5a2c8;
-    color:#ffffff;
-}
-div.stButton > button:hover {
-    background-color: #C8A2C8;
-    color:#ff0000;
-    }
-</style>""", unsafe_allow_html=True)
-
-st.sidebar.image('./pages/setup/images/aba_icon6.jpg', width=100)
-st.sidebar.title("程序运行详情")
 scope = ['https://spreadsheets.google.com/feeds',
          'https://www.googleapis.com/auth/drive']
 
