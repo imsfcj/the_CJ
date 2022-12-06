@@ -19,10 +19,8 @@ sh = client.open(spreadsheetname)
 
 the_new = st.button('new')
 if the_new :
-    old_title = "template"
-    new_title = "the_new_sheet"
-    index = 1  # Insert the new sheet at index 1
     worksheet = sh.worksheet('template')
-    worksheet_id = '102342791'
+    worksheet_to_duplicate = worksheets[0]
+    worksheet_id = worksheet_to_duplicate.id
     st.write(worksheet_id)
-    sh.duplicate_sheet(str(worksheet_id), new_title, index)
+    sh.duplicate_sheet(worksheet_id, "the_new_sheet", 0)
