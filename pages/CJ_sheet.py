@@ -22,5 +22,6 @@ if the_new :
     worksheets = sh.worksheets()
     worksheet_to_duplicate = worksheets[0]
     worksheet_id = worksheet_to_duplicate.id
-    sh.duplicate_sheet(worksheet_id, "New Sheet Name", -1)
+    insert_sheet_index = 1
+    sh.duplicate_sheet(worksheet_id, "New Sheet Name", insert_sheet_index)
 
