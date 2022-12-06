@@ -19,8 +19,8 @@ sh = client.open(spreadsheetname)
 
 the_new = st.button('new')
 if the_new :
-    worksheet = sh.worksheet('template')
+    worksheets = sh.worksheets()
     worksheet_to_duplicate = worksheets[0]
     worksheet_id = worksheet_to_duplicate.id
-    st.write(worksheet_id)
-    sh.duplicate_sheet(worksheet_id, "the_new_sheet", 0)
+    sh.duplicate_sheet(worksheet_id, "New Sheet Name", 0)
+
