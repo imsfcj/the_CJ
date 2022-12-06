@@ -12,8 +12,8 @@ start_of_week = today - timedelta(days=day_of_week - 1)
 end_of_week = today + timedelta(days=7 - day_of_week)
 
 # Print the starting and ending dates
-st.write("{}-{}".format(start_of_week.strftime("%b%d"), end_of_week.strftime("%b%d")))
-st.write("End of week:", end_of_week.strftime("%b%d"))
+this_week = "{}-{}".format(start_of_week.strftime("%b%d"), end_of_week.strftime("%b%d"))
+st.write(this_week)
 
 next_week = today + timedelta(days=7)
 
