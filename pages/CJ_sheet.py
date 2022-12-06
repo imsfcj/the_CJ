@@ -13,6 +13,6 @@ starting_date = today - timedelta(days=day_of_week-1)
 # Calculate the ending date of the week (Sunday)
 ending_date = starting_date + timedelta(days=6)
 
-print(f"Week starting: {starting_date.strftime('%B %d, %Y')}")
-print(f"Week ending: {ending_date.strftime('%B %d, %Y')}")
+st.write(f"Week starting: {starting_date.strftime('%B %d, %Y')}")
+st.write(f"Week ending: {ending_date.strftime('%B %d, %Y')}")
 
