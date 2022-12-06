@@ -69,7 +69,7 @@ if the_day == 'Wed' : the_pick = 3
 if the_day == 'Thu' : the_pick = 4
 if the_day == 'Fri' : the_pick = 5
 if the_day == 'Sat' : the_pick = 6
-if the_day == 'Sun' : the_pick = 6
+if the_day == 'Sun' : the_pick = 7
 
 st.title("统计司机助手")
 tab1,tab2 = st.tabs(["每日统计","一周统计"])    
@@ -98,7 +98,7 @@ spreadsheetname = "司机一周统计表"
 spread = Spread(spreadsheetname,client = client)
 sh = client.open(spreadsheetname)
 #schedule_sheet = sh.worksheet(this_week)
-df = spread.sheet_to_df(formula_columns=['Driver', 'Location', the_pick], sheet=this_week)
+df = spread.sheet_to_df(formula_columns=['Driver', 'Location', the_day], sheet=this_week)
 day_driver = df.to_dict()
 st.write(day_driver)
 
