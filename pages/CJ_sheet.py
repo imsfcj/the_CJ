@@ -13,7 +13,7 @@ spreadsheetname = "司机一周统计表"
 spread = Spread(spreadsheetname,client = client)
 
 # Check the connection
-st.write(spreadsheet.url)
+st.write(spread.url)
 
 sh = client.open(spreadsheetname)
 
