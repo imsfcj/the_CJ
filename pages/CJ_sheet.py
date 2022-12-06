@@ -1,30 +1,29 @@
 import streamlit as st 
 
 from datetime import date, timedelta
-from dateutil.relativedelta import relativedelta
-from dateutil import parser
+
 today = date.today()
 
-# Get the year, week number, and day of the week
-year, week_number, day_of_week = today.isocalendar()
+# Get the day of the week (1-7, where 1 is Monday and 7 is Sunday)
+day_of_week = today.isoweekday()
 
-# Calculate the starting date of the week (Monday)
-starting_date = today - timedelta(days=day_of_week-1)
+# Calculate the starting and ending dates of the week
+start_of_week = today - timedelta(days=day_of_week - 1)
+end_of_week = today + timedelta(days=7 - day_of_week)
 
-# Calculate the ending date of the week (Sunday)
-ending_date = starting_date + timedelta(days=6)
+# Print the starting and ending dates
+st.write("Start of week:", start_of_week.strftime("%m/%d/%Y"))
+st.write("End of week:", end_of_week.strftime("%m/%d/%Y"))
 
-st.write(f"Week starting: {starting_date.strftime('%b %d, %Y')}")
-st.write(f"Week ending: {ending_date.strftime('%b %d, %Y')}")
+next_week = today + timedelta(days=7)
 
-one_week = relativedelta(weeks=1)
+# Get the day of the week (1-7, where 1 is Monday and 7 is Sunday)
+day_of_week = next_week.isoweekday()
 
-# Get next Monday
-next_monday = today + relativedelta(weekday=relativedelta.MO(1))
+# Calculate the starting and ending dates of the week
+start_of_week = next_week - timedelta(days=day_of_week - 1)
+end_of_week = next_week + timedelta(days=7 - day_of_week)
 
-# Get next Sunday
-next_sunday = next_monday + relativedelta(days=6)
-
-# Print the dates
-st.write("Next Monday:", next_monday.strftime("%Y-%m-%d"))
-st.write("Next Sunday:", next_sunday.strftime("%Y-%m-%d"))
+# Print the starting and ending dates
+st.write("Start of week:", start_of_week.strftime("%b %d, %Y"))
+st.write("End of week:", end_of_week.strftime("%b %d, %Y"))
