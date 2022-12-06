@@ -3,4 +3,4 @@ pandas==1.2.0
 openpyxl==3.2.0b1
 gsheetsdb==0.1.13.1
 gspread==3.6.0
-gspread-pandas==2.0.0
+gspread-pandas==3.2.2
