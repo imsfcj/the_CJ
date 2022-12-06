@@ -137,16 +137,6 @@ for dri,are in alist.items():
     cur.execute("INSERT INTO Driver_List (Driver,Area) VALUES (?,?)",(dri,are))
     con.commit()
 
-scope = ['https://spreadsheets.google.com/feeds',
-         'https://www.googleapis.com/auth/drive']
-
-credentials = service_account.Credentials.from_service_account_info(
-                st.secrets["gcp_service_account"], scopes = scope)
-client = Client(scope=scope,creds=credentials)
-spreadsheetname = "司机一周统计表"
-spread = Spread(spreadsheetname,client = client)
-sh = client.open(spreadsheetname)
-
 st.title("统计司机助手")
 tab1,tab2 = st.tabs(["每日统计","一周统计"])
 
@@ -276,9 +266,19 @@ if bt2 :
     '''
     df = pd.read_sql (rq, con)
     df_xlsx = to_excel(df)
+    
+    scope = ['https://spreadsheets.google.com/feeds',
+             'https://www.googleapis.com/auth/drive']
+
+    credentials = service_account.Credentials.from_service_account_info(
+                    st.secrets["gcp_service_account"], scopes = scope)
+    client = Client(scope=scope,creds=credentials)
+    spreadsheetname = "司机一周统计表"
+    spread = Spread(spreadsheetname,client = client)
+    sh = client.open(spreadsheetname)
     the_sheets = sh.worksheet('template')
     the_sheets.duplicate(insert_sheet_index=None, new_sheet_id=None, new_sheet_name=None)
-    spread.df_to_sheet(df,start=(2,1),sheet='Copy of template',index = False)
+    spread.df_to_sheet(df,start=(1,1),sheet='Copy of template',index = False)
     
     
     main_container2.download_button(label='📥 下载每周司机统计信息',
