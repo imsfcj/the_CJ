@@ -278,7 +278,7 @@ if bt2 :
     df_xlsx = to_excel(df)
     the_sheets = sh.worksheet('template')
     the_sheets.duplicate(insert_sheet_index=None, new_sheet_id=None, new_sheet_name=None)
-    out_sheets = sh.worksheet('Copy of template')
+    out_sheets = sh.sheet1
     out_sheets.df_to_sheet(df,start=(2,1))
     
     
