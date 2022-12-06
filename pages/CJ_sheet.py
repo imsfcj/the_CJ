@@ -71,6 +71,24 @@ if the_day == 'Fri' : the_pick = 5
 if the_day == 'Sat' : the_pick = 6
 if the_day == 'Sun' : the_pick = 6
 
+st.title("统计司机助手")
+tab1,tab2 = st.tabs(["每日统计","一周统计"])    
+form1 = tab1.form(key="Options")
+choice = form1.selectbox("想统计哪一天的司机报名情况？",('Mon','Tue','Wed','Thu','Fri','Sat','Sun'),index=the_pick)
+form1.header("统计每日司机")
+uploaded_file = form1.file_uploader("请上传需要统计的文件：", accept_multiple_files=False)
+main_container1 = tab1.container()
+main_container1.write("")
+bt1 = form1.form_submit_button("提交")
+dm1,dm2 = tab1.columns(2)
+dm1.subheader("司机号")
+dm2.subheader("配送地区")   
+    
+    
+    
+    
+    
+    
 scope = ['https://spreadsheets.google.com/feeds',
          'https://www.googleapis.com/auth/drive']
 
