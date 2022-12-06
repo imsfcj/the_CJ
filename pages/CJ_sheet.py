@@ -55,7 +55,7 @@ if the_day == 'Fri' : the_pick = 5
 if the_day == 'Sat' : the_pick = 6
 if the_day == 'Sun' : the_pick = 6
 
-st.set_page_config(page_title='CJ 统计司机助手',page_icon = "🛐" ,initial_sidebar_state = 'expanded')
+st.set_page_config(page_title='CJ sheet助手',page_icon = "🛐" ,initial_sidebar_state = 'expanded')
 m = st.markdown("""
 <style>
 div.stButton > button:first-child {
