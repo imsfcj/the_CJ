@@ -100,7 +100,7 @@ sh = client.open(spreadsheetname)
 #schedule_sheet = sh.worksheet(this_week)
 df = spread.sheet_to_df(index=0,sheet=this_week)
 day_driver = df.loc[:, ['Driver', 'Location', the_day]]
-for row in day_driver.rows:
+for index, row in day_driver.iterrows():
     st.write(row['Driver'],row['Location'],row[the_day])
 
 
