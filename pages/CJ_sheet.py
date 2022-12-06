@@ -14,3 +14,11 @@ spread = Spread(spreadsheetname,client = client)
 
 # Check the connection
 st.write(spread.url)
+
+the_new = st.button('new')
+if the_new :
+    old_title = "template"
+    new_title = "the_new_sheet"
+    index = 1  # Insert the new sheet at index 1
+    spread.duplicate_sheet(old_title, new_title, index)
+
