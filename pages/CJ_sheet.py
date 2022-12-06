@@ -76,7 +76,6 @@ tab1,tab2 = st.tabs(["每日统计","一周统计"])
 form1 = tab1.form(key="Options")
 choice = form1.selectbox("想统计哪一天的司机报名情况？",('Mon','Tue','Wed','Thu','Fri','Sat','Sun'),index=the_pick)
 form1.header("统计每日司机")
-uploaded_file = form1.file_uploader("请上传需要统计的文件：", accept_multiple_files=False)
 main_container1 = tab1.container()
 main_container1.write("")
 bt1 = form1.form_submit_button("提交")
@@ -99,8 +98,8 @@ spreadsheetname = "司机一周统计表"
 spread = Spread(spreadsheetname,client = client)
 sh = client.open(spreadsheetname)
 schedule_sheet = sh.worksheet(this_week)
-
-st.write(schedule_sheet)
+df = DataFrame(worksheet.get_all_records())
+st.write(df)
 
 
 
