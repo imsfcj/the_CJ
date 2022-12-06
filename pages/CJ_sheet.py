@@ -20,5 +20,5 @@ sh = client.open(spreadsheetname)
 the_new = st.button('new')
 if the_new :
     the_sheets = sh.worksheet('template')
-    sh.duplicate(insert_sheet_index=None, new_sheet_id=None, new_sheet_name=None)
+    the_sheets.duplicate(insert_sheet_index=None, new_sheet_id=None, new_sheet_name=None)
 
