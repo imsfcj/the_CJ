@@ -1,7 +1,7 @@
 import streamlit as st 
 
 from datetime import date, timedelta
-from dateutil.relativedelta import relativedelta, parser
+from dateutil import relativedelta, parser
 today = date.today()
 
 # Get the year, week number, and day of the week
