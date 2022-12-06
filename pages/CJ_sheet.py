@@ -22,6 +22,6 @@ if the_new :
     old_title = "template"
     new_title = "the_new_sheet"
     index = 1  # Insert the new sheet at index 1
-    worksheet = sh.get_worksheet_by_title('template')
+    worksheet = sh.get_worksheet_by_name('template')
     worksheet_id = worksheet.id
     sh.duplicate_sheet(worksheet_id, new_title, index)
