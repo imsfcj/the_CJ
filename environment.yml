@@ -2,6 +2,7 @@ name: myenv
 channels:
     - conda-forge
 dependencies:
+    - conda=22.11.0
     - xlsxwriter
     - openpyxl
     - gsheetsdb
