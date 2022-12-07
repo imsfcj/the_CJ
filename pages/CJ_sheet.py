@@ -41,7 +41,8 @@ def to_excel(df):
 toronto_timezone = timezone('America/Toronto')   
 now = datetime.now(tz=toronto_timezone)
 today = now.date()
-today_str = today.strftime('%b%d_%a')
+tomorrow = today + timedelta(days=1)
+tmr_str = tomorrow.strftime('%b%d_%a')
 the_day = today.strftime('%a')
 if the_day == 'Mon' : the_pick = 1
 if the_day == 'Tue' : the_pick = 2
@@ -50,7 +51,7 @@ if the_day == 'Thu' : the_pick = 4
 if the_day == 'Fri' : the_pick = 5
 if the_day == 'Sat' : the_pick = 6
 if the_day == 'Sun' : the_pick = 0
-st.write(today_str)
+#st.write(today_str)
 
 
 # Get the day of the week (1-7, where 1 is Monday and 7 is Sunday)
@@ -121,6 +122,8 @@ if bt1 :
         df = df.append({a:d},ignore_index=True)
     df = df.apply(lambda x: pd.Series(x.dropna().values)).fillna(' ').dropna(axis=1, how='all')
     st.write(df)
+    tmr_sheet = spread.create_sheet(tmr_str,rows=50,cols=20)
+    spread.df_to_sheet(df,start=(1,1),sheet=tmr_str,index = False)
 
 
 
