@@ -111,7 +111,7 @@ for index, row in day_driver.iterrows():
         count[row['Location']] = []
         count[row['Location']].append(on_board)
 
-df = pd.DataFrame.from_dict(count, orient="index", columns=count.keys(), index=["Value"])
+df = pd.DataFrame.from_dict(count, orient="index", columns=count.keys())
 st.write(df)
 
 
