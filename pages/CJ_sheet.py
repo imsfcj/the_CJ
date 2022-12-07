@@ -105,11 +105,12 @@ count = dict()
 for index, row in day_driver.iterrows():
     if row[the_day] != '1' : continue
     on_board = str(row['Driver'])
-    if row['Location'] in count:
-        count[row['Location']].append(on_board)
+    the_area = row['Location'].upper()
+    if the_area in count:
+        count[the_area].append(on_board)
     else :
-        count[row['Location']] = []
-        count[row['Location']].append(on_board)
+        count[the_area] = []
+        count[the_area].append(on_board)
 rows = list(zip(*count.values()))
 df = pd.DataFrame.from_records(rows, columns=count.keys())
 st.write(df)
