@@ -50,7 +50,9 @@ if the_day == 'Sat' : the_pick = 6
 if the_day == 'Sun' : the_pick = 0
 toronto_timezone = timezone('America/Toronto')   
 today = date.today()
-st.write(today)
+today = date.today(tz=toronto_timezone)
+today_str = today.strftime('%Y-%m-%d')
+st.write(today_str)
 # Get the day of the week (1-7, where 1 is Monday and 7 is Sunday)
 day_of_week = today.isoweekday()
 
