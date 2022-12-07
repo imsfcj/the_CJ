@@ -83,14 +83,12 @@ next_week = "{}-{}".format(start_of_week.strftime("%b%d"), end_of_week.strftime(
 st.title("统计司机助手")
 tab1,tab2 = st.tabs(["每日统计","一周统计"])    
 form1 = tab1.form(key="Options")
-choice = form1.selectbox("想统计哪一天的司机报名情况？",('Mon','Tue','Wed','Thu','Fri','Sat','Sun'),index=the_pick)
 form1.header("统计每日司机")
+form1.subheader('本周为：',this_week)
+choice = form1.selectbox("想统计哪一天的司机报名情况？",('Mon','Tue','Wed','Thu','Fri','Sat','Sun'),index=the_pick)
 main_container1 = tab1.container()
 main_container1.write("")
 bt1 = form1.form_submit_button("提交")
-dm1,dm2 = tab1.columns(2)
-dm1.subheader("司机号")
-dm2.subheader("配送地区")   
     
     
     
@@ -98,7 +96,7 @@ dm2.subheader("配送地区")
     
     
 if bt1 :
-    st.write(choice)
+    #st.write(choice)
     scope = ['https://spreadsheets.google.com/feeds',
              'https://www.googleapis.com/auth/drive']
 
@@ -124,7 +122,7 @@ if bt1 :
     st.write(df)
     tmr_sheet = spread.create_sheet(tmr_str,rows=50,cols=20)
     schedule_sheet = sh.worksheet(tmr_str)
-    spread.move_worksheet(schedule_sheet,0)
+    sh.move_worksheet(schedule_sheet,0)
     spread.df_to_sheet(df,start=(1,1),sheet=tmr_str,index = False)
 
 
