@@ -97,6 +97,7 @@ dm2.subheader("配送地区")
     
     
 if bt1 :
+    st.write(choice)
     scope = ['https://spreadsheets.google.com/feeds',
              'https://www.googleapis.com/auth/drive']
 
