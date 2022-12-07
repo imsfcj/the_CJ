@@ -112,7 +112,7 @@ if bt1 :
     day_driver = df.loc[:, ['Driver', 'Location', choice]]
     count = dict()
     for index, row in day_driver.iterrows():
-        if row[the_day] != '1' : continue
+        if row[choice] != '1' : continue
         on_board = str(row['Driver'])
         the_area = row['Location'].upper().replace(' ','_')
         count[on_board]=the_area
