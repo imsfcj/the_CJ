@@ -1,9 +1,8 @@
 import streamlit as st 
-from datetime import date, timedelta
+from datetime import date, timedelta, datetime
 import sqlite3, os, time, re, pytz
 from pytz import timezone
 from io import BytesIO
-from datetime import datetime, date
 import pandas as pd
 from pandas import DataFrame
 from gspread_pandas import Spread,Client
@@ -49,8 +48,8 @@ if the_day == 'Fri' : the_pick = 5
 if the_day == 'Sat' : the_pick = 6
 if the_day == 'Sun' : the_pick = 0
 toronto_timezone = timezone('America/Toronto')   
-today = date.today()
-today = date.today(tz=toronto_timezone)
+now = datetime.now(tz=toronto_timezone)
+today = now.date()
 today_str = today.strftime('%Y-%m-%d')
 st.write(today_str)
 # Get the day of the week (1-7, where 1 is Monday and 7 is Sunday)
