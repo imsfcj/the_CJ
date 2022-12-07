@@ -106,16 +106,10 @@ for index, row in day_driver.iterrows():
     if row[the_day] != '1' : continue
     on_board = str(row['Driver'])
     the_area = row['Location'].upper().replace(' ','_')
-    if the_area in count:
-        count[the_area].append(on_board)
-    else :
-        count[the_area] = []
-        count[the_area].append(on_board)
+    count[on_board]=the_area
 df = pd.read_excel('./pages/setup/data/important/day_out.xlsx')
 for d,a in count.items() :
-    a = tuple(a)
-    row = dict(items=(a, d))
-    df = df.append(row,ignore_index=True)
+    df = df.append({a:d},ignore_index=True)
 df = df.apply(lambda x: pd.Series(x.dropna().values)).fillna(' ')
 st.write(df)
 
