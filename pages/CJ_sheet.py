@@ -111,10 +111,10 @@ for index, row in day_driver.iterrows():
     else :
         count[the_area] = []
         count[the_area].append(on_board)
-rows = list(zip(*count.values()))
-st.write(rows)
-df = pd.DataFrame.from_records(rows, columns=count.keys())
-st.write(df)
+worksheet = sh.add_worksheet('Sheet1', rows=len(count), cols=max(len(v) for v in count.values()))
+
+# Update the cells in the worksheet with the data from the dictionary
+worksheet.update([count.keys()] + list(zip(*count.values())))
 
 
 
