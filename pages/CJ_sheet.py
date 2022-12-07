@@ -123,6 +123,7 @@ if bt1 :
     schedule_sheet = sh.worksheet('day_temp')
     schedule_sheet.duplicate(insert_sheet_index=None, new_sheet_id=None, new_sheet_name=tmr_str)
     spread.df_to_sheet(df,start=(1,1),sheet=tmr_str,index = False)
+    st.sidebar.write("司机统计完毕")
     
     
 
