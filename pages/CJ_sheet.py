@@ -105,7 +105,7 @@ count = defaultdict(list)
 for index, row in day_driver.iterrows():
     if row[the_day] != '1' : continue
     if row['Location'] in count:
-        count[row['Location']].append(str(row['Driver']))
+        count[row['Location']] += row['Driver']
     else :
         count[row['Location']] = []
         count[row['Location']] = row['Driver']
