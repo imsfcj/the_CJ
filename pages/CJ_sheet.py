@@ -113,7 +113,9 @@ for index, row in day_driver.iterrows():
         count[the_area].append(on_board)
 df = pd.read_excel('./pages/setup/data/important/day_out.xlsx')
 for d,a in count.items() :
-    df = df.append({a:d},ignore_index=True)
+    a = tuple(a)
+    row = dict(items=(a, d))
+    df = df.append(row,ignore_index=True)
 df = df.apply(lambda x: pd.Series(x.dropna().values)).fillna(' ')
 st.write(df)
 
