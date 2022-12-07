@@ -110,7 +110,8 @@ for index, row in day_driver.iterrows():
 df = pd.read_excel('./pages/setup/data/important/day_out.xlsx')
 for d,a in count.items() :
     df = df.append({a:d},ignore_index=True)
-df = df.apply(lambda x: pd.Series(x.dropna().values)).fillna(' ').dropna(axis=1, how='all')
+df = df.apply(lambda x: pd.Series(x.dropna().values)).fillna(' ')
+df = df.dropna(axis=1, how='all')
 st.write(df)
 
 
