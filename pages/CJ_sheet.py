@@ -48,7 +48,7 @@ if the_day == 'Thu' : the_pick = 4
 if the_day == 'Fri' : the_pick = 5
 if the_day == 'Sat' : the_pick = 6
 if the_day == 'Sun' : the_pick = 0
-    
+toronto_timezone = timezone('America/Toronto')   
 today = date.today(tz=toronto_timezone).strftime('%a')
 st.write(today)
 # Get the day of the week (1-7, where 1 is Monday and 7 is Sunday)
