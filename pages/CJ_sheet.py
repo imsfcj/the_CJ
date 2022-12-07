@@ -37,9 +37,12 @@ def to_excel(df):
     writer.save()
     processed_data = output.getvalue()
     return processed_data
-
-the_day = datetime.today().strftime('%a')
-
+    
+toronto_timezone = timezone('America/Toronto')   
+now = datetime.now(tz=toronto_timezone)
+today = now.date()
+today_str = today.strftime('%b%d_%a')
+the_day = today.strftime('%a')
 if the_day == 'Mon' : the_pick = 1
 if the_day == 'Tue' : the_pick = 2
 if the_day == 'Wed' : the_pick = 3
@@ -47,11 +50,9 @@ if the_day == 'Thu' : the_pick = 4
 if the_day == 'Fri' : the_pick = 5
 if the_day == 'Sat' : the_pick = 6
 if the_day == 'Sun' : the_pick = 0
-toronto_timezone = timezone('America/Toronto')   
-now = datetime.now(tz=toronto_timezone)
-today = now.date()
-today_str = today.strftime('%Y-%m-%d')
 st.write(today_str)
+
+
 # Get the day of the week (1-7, where 1 is Monday and 7 is Sunday)
 day_of_week = today.isoweekday()
 
