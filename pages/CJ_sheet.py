@@ -111,10 +111,11 @@ for index, row in day_driver.iterrows():
     else :
         count[the_area] = []
         count[the_area].append(on_board)
-worksheet = sh.add_worksheet('Sheet1', rows=len(count), cols=max(len(v) for v in count.values()))
-
-# Update the cells in the worksheet with the data from the dictionary
-worksheet.update([count.keys()] + list(zip(*count.values())))
+df = pd.read_excel('./pages/setup/data/important/day_out.xlsx')
+for d,a in count.items() :
+    df = df.append({a:d},ignore_index=True)
+    df = df.apply(lambda x: pd.Series(x.dropna().values)).fillna(' ')
+st.write(df)
 
 
 
