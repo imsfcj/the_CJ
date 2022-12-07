@@ -48,7 +48,7 @@ end_of_week = today + timedelta(days=7 - day_of_week)
 
 # Print the starting and ending dates
 this_week = "{}-{}".format(start_of_week.strftime("%b%d"), end_of_week.strftime("%b%d"))
-st.write(this_week)
+#st.write(this_week)
 
 next_week = today + timedelta(days=7)
 
@@ -61,7 +61,7 @@ end_of_week = next_week + timedelta(days=7 - day_of_week)
 
 # Print the starting and ending dates
 next_week = "{}-{}".format(start_of_week.strftime("%b%d"), end_of_week.strftime("%b%d"))
-st.write(next_week)
+#st.write(next_week)
 
 the_day = datetime.today().strftime('%a')
 if the_day == 'Mon' : the_pick = 1
@@ -110,8 +110,9 @@ for index, row in day_driver.iterrows():
     else :
         count[row['Location']] = []
         count[row['Location']].append(on_board)
-st.write(count)
 
+df = pd.DataFrame.from_dict(count, orient="index", columns=count.keys(), index=["Value"]
+st.write(df)
 
 
 
