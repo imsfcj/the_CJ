@@ -108,7 +108,7 @@ if bt1 :
     spreadsheetname = "司机一周统计表"
     spread = Spread(spreadsheetname,client = client)
     sh = client.open(spreadsheetname)
-    #schedule_sheet = sh.worksheet(this_week)
+    #
     df = spread.sheet_to_df(index=0,sheet=this_week)
     day_driver = df.loc[:, ['Driver', 'Location', choice]]
     count = dict()
@@ -122,7 +122,9 @@ if bt1 :
         df = df.append({a:d},ignore_index=True)
     df = df.apply(lambda x: pd.Series(x.dropna().values)).fillna(' ').dropna(axis=1, how='all')
     st.write(df)
-    tmr_sheet = spread.create_sheet(tmr_str,rows=50,cols=20).move_worksheet(tmr_str,0)
+    tmr_sheet = spread.create_sheet(tmr_str,rows=50,cols=20)
+    schedule_sheet = sh.worksheet(tmr_str)
+    spread.move_worksheet(schedule_sheet,0)
     spread.df_to_sheet(df,start=(1,1),sheet=tmr_str,index = False)
 
 
