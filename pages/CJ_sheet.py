@@ -110,9 +110,9 @@ for index, row in day_driver.iterrows():
     else :
         count[row['Location']] = []
         count[row['Location']].append(on_board)
-
-#df = pd.DataFrame.from_dict(count,orient='columns')
-st.write(count)
+rows = list(zip(*count.values()))
+df = pd.DataFrame.from_records(rows, columns=count.keys())
+st.write(df)
 
 
 
