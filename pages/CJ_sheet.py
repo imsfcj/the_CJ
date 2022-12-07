@@ -112,6 +112,7 @@ for index, row in day_driver.iterrows():
         count[the_area] = []
         count[the_area].append(on_board)
 rows = list(zip(*count.values()))
+st.write(rows)
 df = pd.DataFrame.from_records(rows, columns=count.keys())
 st.write(df)
 
