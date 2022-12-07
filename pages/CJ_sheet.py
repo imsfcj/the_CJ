@@ -96,29 +96,30 @@ dm2.subheader("配送地区")
     
     
     
-scope = ['https://spreadsheets.google.com/feeds',
-         'https://www.googleapis.com/auth/drive']
+if bt1 :
+    scope = ['https://spreadsheets.google.com/feeds',
+             'https://www.googleapis.com/auth/drive']
 
-credentials = service_account.Credentials.from_service_account_info(
-                st.secrets["gcp_service_account"], scopes = scope)
-client = Client(scope=scope,creds=credentials)
-spreadsheetname = "司机一周统计表"
-spread = Spread(spreadsheetname,client = client)
-sh = client.open(spreadsheetname)
-#schedule_sheet = sh.worksheet(this_week)
-df = spread.sheet_to_df(index=0,sheet=this_week)
-day_driver = df.loc[:, ['Driver', 'Location', choice]]
-count = dict()
-for index, row in day_driver.iterrows():
-    if row[the_day] != '1' : continue
-    on_board = str(row['Driver'])
-    the_area = row['Location'].upper().replace(' ','_')
-    count[on_board]=the_area
-df = pd.DataFrame()
-for d,a in count.items() :
-    df = df.append({a:d},ignore_index=True)
-df = df.apply(lambda x: pd.Series(x.dropna().values)).fillna(' ').dropna(axis=1, how='all')
-st.write(df)
+    credentials = service_account.Credentials.from_service_account_info(
+                    st.secrets["gcp_service_account"], scopes = scope)
+    client = Client(scope=scope,creds=credentials)
+    spreadsheetname = "司机一周统计表"
+    spread = Spread(spreadsheetname,client = client)
+    sh = client.open(spreadsheetname)
+    #schedule_sheet = sh.worksheet(this_week)
+    df = spread.sheet_to_df(index=0,sheet=this_week)
+    day_driver = df.loc[:, ['Driver', 'Location', choice]]
+    count = dict()
+    for index, row in day_driver.iterrows():
+        if row[the_day] != '1' : continue
+        on_board = str(row['Driver'])
+        the_area = row['Location'].upper().replace(' ','_')
+        count[on_board]=the_area
+    df = pd.DataFrame()
+    for d,a in count.items() :
+        df = df.append({a:d},ignore_index=True)
+    df = df.apply(lambda x: pd.Series(x.dropna().values)).fillna(' ').dropna(axis=1, how='all')
+    st.write(df)
 
 
 
