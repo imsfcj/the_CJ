@@ -38,6 +38,16 @@ def to_excel(df):
     processed_data = output.getvalue()
     return processed_data
 
+the_day = datetime.today().strftime('%a')
+st.write(the_day)
+if the_day == 'Mon' : the_pick = 1
+if the_day == 'Tue' : the_pick = 2
+if the_day == 'Wed' : the_pick = 3
+if the_day == 'Thu' : the_pick = 4
+if the_day == 'Fri' : the_pick = 5
+if the_day == 'Sat' : the_pick = 6
+if the_day == 'Sun' : the_pick = 0
+    
 today = date.today()
 # Get the day of the week (1-7, where 1 is Monday and 7 is Sunday)
 day_of_week = today.isoweekday()
@@ -63,15 +73,7 @@ end_of_week = next_week + timedelta(days=7 - day_of_week)
 next_week = "{}-{}".format(start_of_week.strftime("%b%d"), end_of_week.strftime("%b%d"))
 #st.write(next_week)
 
-the_day = datetime.today().strftime('%a')
-st.write(the_day)
-if the_day == 'Mon' : the_pick = 1
-if the_day == 'Tue' : the_pick = 2
-if the_day == 'Wed' : the_pick = 3
-if the_day == 'Thu' : the_pick = 4
-if the_day == 'Fri' : the_pick = 5
-if the_day == 'Sat' : the_pick = 6
-if the_day == 'Sun' : the_pick = 0
+
 
 st.title("统计司机助手")
 tab1,tab2 = st.tabs(["每日统计","一周统计"])    
