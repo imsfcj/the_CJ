@@ -105,7 +105,7 @@ count = dict()
 for index, row in day_driver.iterrows():
     if row[the_day] != '1' : continue
     on_board = str(row['Driver'])
-    the_area = row['Location'].upper()
+    the_area = row['Location'].upper().replace(' ','_')
     if the_area in count:
         count[the_area].append(on_board)
     else :
