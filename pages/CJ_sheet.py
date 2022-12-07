@@ -121,7 +121,7 @@ if bt1 :
     df = df.apply(lambda x: pd.Series(x.dropna().values)).fillna(' ').dropna(axis=1, how='all')
     st.write(df)
     schedule_sheet = sh.worksheet('day_temp')
-    the_sheets.duplicate(insert_sheet_index=None, new_sheet_id=None, new_sheet_name=tmr_str)
+    schedule_sheet.duplicate(insert_sheet_index=None, new_sheet_id=None, new_sheet_name=tmr_str)
     spread.df_to_sheet(df,start=(1,1),sheet=tmr_str,index = False)
     
     
