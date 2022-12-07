@@ -107,6 +107,7 @@ for index, row in day_driver.iterrows():
     if row['Location'] in count:
         count[row['Location']].append(str(row['Driver']))
     else :
+        count[row['Location']] = []
         count[row['Location']] = row['Driver']
 st.write(count)
 
