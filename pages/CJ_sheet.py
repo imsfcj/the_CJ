@@ -120,8 +120,8 @@ if bt1 :
         df = df.append({a:d},ignore_index=True)
     df = df.apply(lambda x: pd.Series(x.dropna().values)).fillna(' ').dropna(axis=1, how='all')
     st.write(df)
-    tmr_sheet = sh..add_worksheet(title=tmr_str, rows=50, cols=20)
-   # schedule_sheet = sh.worksheet(tmr_str)
+    tmr_sheet = sh.add_worksheet(title=tmr_str, rows=50, cols=20)
+   #schedule_sheet = sh.worksheet(tmr_str)
     #sh.move_worksheet(schedule_sheet,0)
     spread.df_to_sheet(df,start=(1,1),sheet=tmr_str,index = False)
 
