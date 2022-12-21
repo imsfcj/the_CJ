@@ -7,7 +7,9 @@ from datetime import datetime, timedelta
 import urllib.request, urllib.parse, urllib.error
 
 tz = pytz.timezone('America/Toronto')
-
+ctx = ssl.create_default_context()
+ctx.check_hostname = False
+ctx.verify_mode = ssl.CERT_NONE
 def to_excel(df):
     output = BytesIO()
     writer = pd.ExcelWriter(output, engine='xlsxwriter')
