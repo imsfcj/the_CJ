@@ -213,11 +213,9 @@ if bt1 :
             uhh = urllib.request.urlopen(scan_url, context=ctx)
         scan_data = uhh.read().decode()
         jsss = json.loads(scan_data)
-        for item in jsss['biz_data'] :
-            if item :
-                driver_scan = jsss['biz_data'][0]['driver_id']
-                break
-            else : driver_scan = 'N/A'
+        if len(jsss['biz_data']) >= 1 :
+            driver_scan = jsss['biz_data'][0]['driver_id']
+        else : driver_scan = 'N/A'
         
         cur.execute("INSERT INTO Trans_List (单号,子批次,当前司机号,当前状态,更新时间,映射,主单号,仓库,重量,邮编,扫描记录) VALUES (?,?,?,?,?,?,?,?,?,?,?)",(tracking_number,sub_batch,driver_id,current_stat,the_time,pot,main_batch,the_house,the_weight,the_zip,driver_scan))
         con.commit()
