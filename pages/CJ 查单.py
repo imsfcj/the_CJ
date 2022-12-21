@@ -51,7 +51,8 @@ CREATE TABLE IF NOT EXISTS Trans_List (
     '主单号' TEXT,
     '仓库' INTEGER,
     '重量' TEXT,
-    '邮编' TEXT
+    '邮编' TEXT,
+    '扫描记录' TEXT
 )
 ''')
 con.commit()
@@ -137,7 +138,7 @@ if bt1 :
     percent_complete = 1 / len(h)
     #percent_complete = round(percent_complete,1)
     x = 0
-    #url_head = 'https://map.cluster.uniexpress.org/map/getorderdetail?tno='
+    url_head = 'https://driver.cluster.uniexpress.org/delivery/parcels/scan-journals/'
     for line in h :
         if len(line) < 3 :
             cllm1.write(line)
@@ -180,6 +181,7 @@ if bt1 :
             the_house = js['data']['tracking']['warehouse']
             the_weight = js['data']['tracking']['total_weight']
             the_zip = js['data']['orders']['zipcode']
+            the_id = js['data']['orders']['order_id']
             try:
                 pot = curr.execute('SELECT route_no FROM Post_List WHERE zipcode = ?',(three_post,)).fetchone()[0]
                 conn.commit()
@@ -200,7 +202,22 @@ if bt1 :
             pot = '0'
             the_house = '0'
             the_weight = 'N/A'
-        cur.execute("INSERT INTO Trans_List (单号,子批次,当前司机号,当前状态,更新时间,映射,主单号,仓库,重量,邮编) VALUES (?,?,?,?,?,?,?,?,?,?)",(tracking_number,sub_batch,driver_id,current_stat,the_time,pot,main_batch,the_house,the_weight,the_zip))
+            the_id = 'N/A'
+        scan_url = url_head + str(the_id)
+        try:
+            uhh = urllib.request.urlopen(scan_url, context=ctx)
+        except :
+            time.sleep(5)
+            uhh = urllib.request.urlopen(scan_url, context=ctx)
+        scan_data = uhh.read().decode()
+        jsss = json.loads(scan_data)
+        for item in jss['biz_data'] :
+            if item :
+                driver_scan = jss['biz_data'][0]['driver_id']
+                break
+            else : driver_scan = 'N/A'
+        
+        cur.execute("INSERT INTO Trans_List (单号,子批次,当前司机号,当前状态,更新时间,映射,主单号,仓库,重量,邮编,扫描记录) VALUES (?,?,?,?,?,?,?,?,?,?,?)",(tracking_number,sub_batch,driver_id,current_stat,the_time,pot,main_batch,the_house,the_weight,the_zip,driver_scan))
         con.commit()
         cll1.write(tracking_number)
         cll2.write(sub_batch)
