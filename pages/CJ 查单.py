@@ -95,7 +95,7 @@ cllm1.subheader("单号")
 cllm2.subheader("子批次")
 cllm3.subheader("当前司机号")
 cllm4.subheader("当前状态")
-cllm5.subheader("更新时间")
+cllm5.subheader("扫描记录")
 cllm6.subheader("映射")
 cll1,cll2,cll3,cll4,cll5,cll6 = st.columns(6)
 
@@ -213,9 +213,9 @@ if bt1 :
             uhh = urllib.request.urlopen(scan_url, context=ctx)
         scan_data = uhh.read().decode()
         jsss = json.loads(scan_data)
-        for item in jss['biz_data'] :
+        for item in jsss['biz_data'] :
             if item :
-                driver_scan = jss['biz_data'][0]['driver_id']
+                driver_scan = jsss['biz_data'][0]['driver_id']
                 break
             else : driver_scan = 'N/A'
         
@@ -225,7 +225,7 @@ if bt1 :
         cll2.write(sub_batch)
         cll3.write(str(driver_id))
         cll4.write(str(current_stat))
-        cll5.write(the_time)
+        cll5.write(str(driver_scan))
         cll6.write(pot)
         x = x + percent_complete
         if x >= 1 : x = 1
