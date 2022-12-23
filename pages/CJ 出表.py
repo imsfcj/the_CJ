@@ -55,8 +55,8 @@ if bt1 :
     df = pd.DataFrame.from_dict(dlist, orient='index')
 
     # Rename the columns of the DataFrame
-    df.columns = ['Column B']
-    df.index.name = 'Column A'
+    df.columns = ['Column A','Column B']
+   # df.index.name = 'Column A'
     df_xlsx = to_excel(df)
     main_container.download_button(label='📥 下载查单信息',
                                     data=df_xlsx ,
