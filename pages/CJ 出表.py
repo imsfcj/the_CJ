@@ -52,7 +52,7 @@ if bt1 :
     dlist = {}
     for driver,info in jss['data'].items() :
         dlist[str(driver)] = jss['data'][driver]['total']
-    df = pd.DataFrame(dlist)
+    df = pd.DataFrame(dlist, index=['row1'])
     df_xlsx = to_excel(df)
     main_container.download_button(label='📥 下载查单信息',
                                     data=df_xlsx ,
