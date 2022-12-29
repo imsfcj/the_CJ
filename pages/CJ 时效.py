@@ -34,8 +34,8 @@ if bt1 :
 
 
     d_rate = js['data'][text]['total_packages']
-    st.write('单量：',js['data'][text]['total_packages'])
-    st.write('投递率：',js['data'][text]['toudi_rate'])
+    main_container.write('单量：',js['data'][text]['total_packages'])
+    main_container.write('投递率：',js['data'][text]['toudi_rate'])
 
     for driver,info in jss['data'].items() :
         if driver == 'noid' : continue
@@ -44,6 +44,7 @@ if bt1 :
         if jss['data'][driver]['total'] <= 20 : continue
         if 'DELIVERED' not in jss['data'][driver].keys():
             zero_list = zero_list + str(driver) + '/'
+            fail_list = fail_list + str(driver) + '/'
             continue
         d_percent = jss['data'][driver]['DELIVERED'] / jss['data'][driver]['total']
         if d_percent < 0.9 :
@@ -52,5 +53,5 @@ if bt1 :
 
         #st.subheader(driver)
         #st.write(jss['data'][driver])
-    st.write('尚未开始：',zero_list)
-    st.write('未送完：',fail_list)
+    main_container.write('尚未开始：',zero_list)
+    main_container.write('未送完：',fail_list)
