@@ -34,8 +34,10 @@ if bt1 :
 
 
     d_rate = js['data'][text]['total_packages']
-    main_container.write('单量：',js['data'][text]['total_packages'])
-    main_container.write('投递率：',js['data'][text]['toudi_rate'])
+    dl = '单量：' + str(js['data'][text]['total_packages'])
+    dtl = '投递率：' + str(js['data'][text]['toudi_rate'])
+    main_container.write(dl)
+    main_container.write(dtl)
 
     for driver,info in jss['data'].items() :
         if driver == 'noid' : continue
@@ -53,5 +55,7 @@ if bt1 :
 
         #st.subheader(driver)
         #st.write(jss['data'][driver])
-    main_container.write('尚未开始：',zero_list)
-    main_container.write('未送完：',fail_list)
+    notstart = '尚未开始：' + str(zero_list)
+    notfinish = '未送完：' + str(fail_list)
+    main_container.write(notstart)
+    main_container.write(notfinish)
