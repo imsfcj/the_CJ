@@ -202,9 +202,9 @@ if bt2 :
     st.sidebar.write('\n -----     开始统计     ----- ')
     for uploaded_file in alldrivers:
         try :
-            df = pd.read_excel(uploaded_file,sheet_name="物流列表",header=None,names=["driver","pickup_day"],skiprows=1,usecols="AD:AE")
+            df = pd.read_excel(uploaded_file,sheet_name="物流列表",header=None,names=["driver","pickup_day"],skiprows=1,usecols="AD:AE", decoding="utf-8")
             #df = df[["driver","pickup_day"]]
-            df.to_sql('Import_List', con, if_exists='append', index=False, decoding="utf-8")
+            df.to_sql('Import_List', con, if_exists='append', index=False)
             con.commit()
         except :
             df = pd.read_csv(uploaded_file,header=None,names=["driver","pickup_day"],skiprows=1,usecols=[1,2])
