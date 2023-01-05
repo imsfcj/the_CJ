@@ -722,7 +722,8 @@ if bt1 :
                         cur.execute("INSERT INTO Final_Decision (Tno,Recommendation) VALUES (?,?)",(h[ii],the_decision))
                         con.commit()
                     else :
-                        the_decision = '需和操作人：' + trajectory_person[trajectory_count] + '确认包裹'
+                        st.write(trajectory_person[trajectory_count])
+                        the_decision = '需和操作人：' + str(trajectory_person[trajectory_count]) + '确认包裹'
                         cur.execute("INSERT INTO Final_Decision (Tno,Recommendation) VALUES (?,?)",(h[ii],the_decision))
                         con.commit()
 
