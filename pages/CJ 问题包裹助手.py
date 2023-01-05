@@ -162,7 +162,7 @@ if bt1 :
     x = 0
     for ii in range(len(h)) :
         if len(h[ii]) <= 4 : continue
-        st.write(ii)
+        #st.write(ii)
         url = url_head + h[ii]
         headers = {
             'authority': 'map.cluster.uniexpress.org',
@@ -186,7 +186,7 @@ if bt1 :
 
         #x = 'MBORDU7012624903'
         params = {
-            'tno': ii,
+            'tno': h[ii],
         }
 
         response = requests.get('https://map.cluster.uniexpress.org/map/getorderdetail', params=params, headers=headers)
