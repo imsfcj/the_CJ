@@ -191,7 +191,7 @@ if bt1 :
 
         response = requests.get('https://map.cluster.uniexpress.org/map/getorderdetail', params=params, headers=headers)
         js = json.loads(response.content)
-        st.write(js)
+        #st.write(js)
         if js['status'] == 'SUCCESS' :
             #系统单号
             the_order = js['data']['orders']['order_id']
