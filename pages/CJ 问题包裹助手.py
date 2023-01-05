@@ -185,7 +185,7 @@ if bt1 :
 
         #x = 'MBORDU7012624903'
         params = {
-            'tno': line,
+            'tno': ii,
         }
 
         response = requests.get('https://map.cluster.uniexpress.org/map/getorderdetail', params=params, headers=headers)
