@@ -162,6 +162,7 @@ if bt1 :
     x = 0
     for ii in range(len(h)) :
         if len(h[ii]) <= 4 : continue
+        st.write(ii)
         url = url_head + h[ii]
         headers = {
             'authority': 'map.cluster.uniexpress.org',
@@ -190,6 +191,7 @@ if bt1 :
 
         response = requests.get('https://map.cluster.uniexpress.org/map/getorderdetail', params=params, headers=headers)
         js = json.loads(response.content)
+        st.write(js)
         if js['status'] == 'SUCCESS' :
             #系统单号
             the_order = js['data']['orders']['order_id']
