@@ -44,9 +44,10 @@ st.sidebar.title("程序运行详情")
 
 form1 = st.form(key="Options")
 main_container = st.container()
-form1.title("CJ 三号")
+form1.title("CJ 四号")
 uploaded_file = form1.file_uploader("请上传司机取货统计表", accept_multiple_files=False)
 the_package = form1.radio("是否有实际包裹：",('No','Yes'), horizontal=True)
+today_dispatch_number = form1.text_input("请输入今日批次：")
 text = form1.text_area("请直接输入查单单号： ")
 bt1 = form1.form_submit_button("开始查单")
 
