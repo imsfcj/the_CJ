@@ -1,5 +1,5 @@
 import streamlit as st
-import sqlite3, os, time, re, pytz, json, ssl
+import sqlite3, os, time, re, pytz, json, ssl, requests
 from io import BytesIO
 #from pyxlsb import open_workbook as open_xlsb
 import pandas as pd
@@ -57,7 +57,7 @@ yesterday = datetime.now() - timedelta(1)
 yesterday_timp = datetime.timestamp(yesterday)
 tnt_now = datetime.now(tz).strftime("%y%m%d")
 the_day = datetime.today().strftime('%A')
-today_dispatch_number = 'TSUB-' + str(yesterday.strftime("%Y%m%d"))
+#today_dispatch_number = 'TSUB-' + str(yesterday.strftime("%Y%m%d"))
 the_decision = '不懂'
 nope = 'N/A'
 refund_info = '尚未赔付，'
@@ -103,6 +103,43 @@ yyz_all_warehouse = []
 cur.execute("SELECT * FROM YYZ_Warehouse_List")
 for row in cur : yyz_all_warehouse.append(row[0])
 
+headers = {
+    'authority': 'map.cluster.uniexpress.org',
+    'accept': 'application/json',
+    'accept-language': 'en-US,en;q=0.9,zh-CN;q=0.8,zh;q=0.7',
+    'access-control-allow-credentials': 'true',
+    'access-control-allow-headers': 'Origin, X-Requested-With, Content-Type, Accept, origin, content-type, accept',
+    'access-control-allow-methods': 'GET, PUT, POST, DELETE, OPTIONS',
+    'access-control-allow-origin': '*',
+    'authorization': 'Bearer null',
+    'content-type': 'application/json;charset=UTF-8',
+    'origin': 'https://unimap.cluster.uniexpress.org',
+    'referer': 'https://unimap.cluster.uniexpress.org/',
+    'sec-ch-ua': '"Google Chrome";v="107", "Chromium";v="107", "Not=A?Brand";v="24"',
+    'sec-ch-ua-mobile': '?0',
+    'sec-ch-ua-platform': '"Windows"',
+    'sec-fetch-dest': 'empty',
+    'sec-fetch-mode': 'cors',
+    'sec-fetch-site': 'same-site',
+    'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36',
+}
+
+params = {
+    'username': 'jason_cj',
+}
+
+json_data = {
+    'password': '16988',
+}
+
+responsee = requests.post('https://map.cluster.uniexpress.org/map/login', params=params, headers=headers, json=json_data)
+jss = json.loads(responsee.content)
+
+the_pas = 'Bearer ' +  jss['data']['token']
+
+
+
+
 if bt1 :
     st.sidebar.write('\n -----     准备中     ----- ')
     my_bar = main_container.progress(0)
@@ -119,21 +156,45 @@ if bt1 :
     con.commit()
 
     h = text.split('\n')
-    url_head = 'https://map.cluster.uniexpress.org/map/getorderdetail?tno='
+    url_head = 'https://driver.cluster.uniexpress.org/delivery/parcels/scan-journals/'
     percent_complete = 1 / len(h)
     #percent_complete = round(percent_complete,1)
     x = 0
     for ii in range(len(h)) :
         if len(h[ii]) <= 4 : continue
         url = url_head + h[ii]
-        uh = urllib.request.urlopen(url, context=ctx)
-        data = uh.read().decode()
-        js = json.loads(data)
+        headers = {
+            'authority': 'map.cluster.uniexpress.org',
+            'accept': 'application/json',
+            'accept-language': 'en-US,en;q=0.9',
+            'access-control-allow-credentials': 'true',
+            'access-control-allow-headers': 'Origin, X-Requested-With, Content-Type, Accept, origin, content-type, accept',
+            'access-control-allow-methods': 'GET, PUT, POST, DELETE, OPTIONS',
+            'access-control-allow-origin': '*',
+            'authorization': the_pas,
+            'origin': 'https://unimap.cluster.uniexpress.org',
+            'referer': 'https://unimap.cluster.uniexpress.org/',
+            'sec-ch-ua': '"Google Chrome";v="107", "Chromium";v="107", "Not=A?Brand";v="24"',
+            'sec-ch-ua-mobile': '?0',
+            'sec-ch-ua-platform': '"Windows"',
+            'sec-fetch-dest': 'empty',
+            'sec-fetch-mode': 'cors',
+            'sec-fetch-site': 'same-site',
+            'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36',
+        }
+
+        #x = 'MBORDU7012624903'
+        params = {
+            'tno': line,
+        }
+
+        response = requests.get('https://map.cluster.uniexpress.org/map/getorderdetail', params=params, headers=headers)
+        js = json.loads(response.content)
         if js['status'] == 'SUCCESS' :
             #系统单号
             the_order = js['data']['orders']['order_id']
             #扫描记录 0是最晚
-            scan_url = 'https://driver.cluster.uniexpress.org/delivery/parcels/scan-journals/' + str(the_order)
+            scan_url = url_head + str(the_order)
             try:
                 uhh = urllib.request.urlopen(scan_url, context=ctx)
             except :
@@ -247,7 +308,7 @@ if bt1 :
          #st.write(latest_trajectory)
             if the_package == 'No' :
                 if driver_scan_id[0] == 'N/A' :
-                    if today_dispatch_number in sub_batch_info or sub_batch_info == 'TSUB-202203231400' :
+                    if today_dispatch_number in sub_batch_info or sub_batch_info == 'TSUB-202209011537' :
                         the_decision = '包裹被盲扫，状态未更新'
                         cur.execute("INSERT INTO Final_Decision (Tno,Recommendation) VALUES (?,?)",(h[ii],the_decision))
                         con.commit()
@@ -301,7 +362,7 @@ if bt1 :
                 cur.execute("INSERT INTO Final_Decision (Tno,Recommendation) VALUES (?,?)",(h[ii],the_decision))
                 con.commit()
             else :
-                if today_dispatch_number in sub_batch_info or sub_batch_info == 'TSUB-202203231400' :
+                if today_dispatch_number in sub_batch_info or sub_batch_info == 'TSUB-202209011537' :
                     the_decision = '包裹被盲扫，需挑出'
                     cur.execute("INSERT INTO Final_Decision (Tno,Recommendation) VALUES (?,?)",(h[ii],the_decision))
                     con.commit()
@@ -331,7 +392,7 @@ if bt1 :
                     cur.execute("INSERT INTO Final_Decision (Tno,Recommendation) VALUES (?,?)",(h[ii],the_decision))
                     con.commit()
             else :
-                if today_dispatch_number in sub_batch_info or sub_batch_info == 'TSUB-202203231400' :
+                if today_dispatch_number in sub_batch_info or sub_batch_info == 'TSUB-202209011537' :
                     the_decision = '包裹被盲扫，状态未更新'
                     cur.execute("INSERT INTO Final_Decision (Tno,Recommendation) VALUES (?,?)",(h[ii],the_decision))
                     con.commit()
@@ -375,7 +436,7 @@ if bt1 :
                 cur.execute("INSERT INTO Final_Decision (Tno,Recommendation) VALUES (?,?)",(h[ii],the_decision))
                 con.commit()
             else :
-                if today_dispatch_number in sub_batch_info or sub_batch_info == 'TSUB-202203231400' :
+                if today_dispatch_number in sub_batch_info or sub_batch_info == 'TSUB-202209011537' :
                     the_decision = '包裹被盲扫，需拿出'
                     cur.execute("INSERT INTO Final_Decision (Tno,Recommendation) VALUES (?,?)",(h[ii],the_decision))
                     con.commit()
@@ -439,7 +500,7 @@ if bt1 :
                                 cur.execute("INSERT INTO Final_Decision (Tno,Recommendation) VALUES (?,?)",(h[ii],the_decision))
                                 con.commit()
                         else :
-                            if today_dispatch_number in sub_batch_info or sub_batch_info == 'TSUB-202203231400' :
+                            if today_dispatch_number in sub_batch_info or sub_batch_info == 'TSUB-202209011537' :
                                 the_decision = '包裹被盲扫，状态未更新'
                                 cur.execute("INSERT INTO Final_Decision (Tno,Recommendation) VALUES (?,?)",(h[ii],the_decision))
                                 con.commit()
@@ -460,7 +521,7 @@ if bt1 :
                                         cur.execute("INSERT INTO Final_Decision (Tno,Recommendation) VALUES (?,?)",(h[ii],the_decision))
                                         con.commit()
                     else :
-                        if today_dispatch_number in sub_batch_info or sub_batch_info == 'TSUB-202203231400' :
+                        if today_dispatch_number in sub_batch_info or sub_batch_info == 'TSUB-202209011537' :
                             the_decision = '包裹被盲扫，状态未更新'
                             cur.execute("INSERT INTO Final_Decision (Tno,Recommendation) VALUES (?,?)",(h[ii],the_decision))
                             con.commit()
@@ -516,7 +577,7 @@ if bt1 :
             else :
                 dispatch_time = int(re.findall('^[A-Z]+\-([0-9]+)',sub_batch_info)[0][:8])
                 the_time_diff = int(yesterday.strftime("%Y%m%d")) - dispatch_time
-                if today_dispatch_number in sub_batch_info or sub_batch_info == 'TSUB-202203231400' :
+                if today_dispatch_number in sub_batch_info or sub_batch_info == 'TSUB-202209011537' :
                     the_decision = '包裹被盲扫'
                     cur.execute("INSERT INTO Final_Decision (Tno,Recommendation) VALUES (?,?)",(h[ii],the_decision))
                     con.commit()
@@ -627,7 +688,7 @@ if bt1 :
                         cur.execute("INSERT INTO Final_Decision (Tno,Recommendation) VALUES (?,?)",(h[ii],the_decision))
                         con.commit()
                     else :
-                        if today_dispatch_number in sub_batch_info or sub_batch_info == 'TSUB-202203231400' :
+                        if today_dispatch_number in sub_batch_info or sub_batch_info == 'TSUB-202209011537' :
                             the_decision = '包裹被盲扫'
                             cur.execute("INSERT INTO Final_Decision (Tno,Recommendation) VALUES (?,?)",(h[ii],the_decision))
                             con.commit()
@@ -654,7 +715,7 @@ if bt1 :
                     cur.execute("INSERT INTO Final_Decision (Tno,Recommendation) VALUES (?,?)",(h[ii],the_decision))
                     con.commit()
                 else :
-                    if today_dispatch_number in sub_batch_info or sub_batch_info == 'TSUB-202203231400' :
+                    if today_dispatch_number in sub_batch_info or sub_batch_info == 'TSUB-202209011537' :
                         the_decision = '包裹被盲扫，需修改状态/拿出'
                         cur.execute("INSERT INTO Final_Decision (Tno,Recommendation) VALUES (?,?)",(h[ii],the_decision))
                         con.commit()
@@ -689,7 +750,7 @@ if bt1 :
                     cur.execute("INSERT INTO Final_Decision (Tno,Recommendation) VALUES (?,?)",(h[ii],the_decision))
                     con.commit()
             else :
-                if today_dispatch_number in sub_batch_info or sub_batch_info == 'TSUB-202203231400' :
+                if today_dispatch_number in sub_batch_info or sub_batch_info == 'TSUB-202209011537' :
                     the_decision = '包裹被盲扫，需挑出单独处理'
                     cur.execute("INSERT INTO Final_Decision (Tno,Recommendation) VALUES (?,?)",(h[ii],the_decision))
                     con.commit()
@@ -734,7 +795,7 @@ if bt1 :
                     cur.execute("INSERT INTO Final_Decision (Tno,Recommendation) VALUES (?,?)",(h[ii],the_decision))
                     con.commit()
             else :
-                if today_dispatch_number in sub_batch_info or sub_batch_info == 'TSUB-202203231400' :
+                if today_dispatch_number in sub_batch_info or sub_batch_info == 'TSUB-202209011537' :
                     the_decision = '包裹被盲扫，需挑出单独处理'
                     cur.execute("INSERT INTO Final_Decision (Tno,Recommendation) VALUES (?,?)",(h[ii],the_decision))
                     con.commit()
@@ -749,7 +810,7 @@ if bt1 :
                 cur.execute("INSERT INTO Final_Decision (Tno,Recommendation) VALUES (?,?)",(h[ii],the_decision))
                 con.commit()
             else :
-                if today_dispatch_number in sub_batch_info or sub_batch_info == 'TSUB-202203231400' :
+                if today_dispatch_number in sub_batch_info or sub_batch_info == 'TSUB-202209011537' :
                     the_decision = '包裹被盲扫，需送去自提点'
                     cur.execute("INSERT INTO Final_Decision (Tno,Recommendation) VALUES (?,?)",(h[ii],the_decision))
                     con.commit()
@@ -774,7 +835,7 @@ if bt1 :
                     cur.execute("INSERT INTO Final_Decision (Tno,Recommendation) VALUES (?,?)",(h[ii],the_decision))
                     con.commit()
             else :
-                if today_dispatch_number in sub_batch_info or sub_batch_info == 'TSUB-202203231400' :
+                if today_dispatch_number in sub_batch_info or sub_batch_info == 'TSUB-202209011537' :
                     the_decision = '包裹被盲扫，需挑出单独处理'
                     cur.execute("INSERT INTO Final_Decision (Tno,Recommendation) VALUES (?,?)",(h[ii],the_decision))
                     con.commit()
@@ -823,7 +884,7 @@ if bt1 :
                     con.commit()
             else :
                 if int(warehouse_info) in yyz_all_warehouse :
-                    if today_dispatch_number in sub_batch_info or sub_batch_info == 'TSUB-202203231400' :
+                    if today_dispatch_number in sub_batch_info or sub_batch_info == 'TSUB-202209011537' :
                         the_decision = '包裹被盲扫，需修改状态'
                         cur.execute("INSERT INTO Final_Decision (Tno,Recommendation) VALUES (?,?)",(h[ii],the_decision))
                         con.commit()
@@ -832,7 +893,7 @@ if bt1 :
                         cur.execute("INSERT INTO Final_Decision (Tno,Recommendation) VALUES (?,?)",(h[ii],the_decision))
                         con.commit()
                 else :
-                    if today_dispatch_number in sub_batch_info or sub_batch_info == 'TSUB-202203231400' :
+                    if today_dispatch_number in sub_batch_info or sub_batch_info == 'TSUB-202209011537' :
                         the_decision = '其他城市发错包裹被盲扫,需挑出转运'
                         cur.execute("INSERT INTO Final_Decision (Tno,Recommendation) VALUES (?,?)",(h[ii],the_decision))
                         con.commit()
@@ -847,7 +908,7 @@ if bt1 :
                 cur.execute("INSERT INTO Final_Decision (Tno,Recommendation) VALUES (?,?)",(h[ii],the_decision))
                 con.commit()
             else :
-                if today_dispatch_number in sub_batch_info or sub_batch_info == 'TSUB-202203231400' :
+                if today_dispatch_number in sub_batch_info or sub_batch_info == 'TSUB-202209011537' :
                     the_decision = '包裹被盲扫，待再次配送'
                     cur.execute("INSERT INTO Final_Decision (Tno,Recommendation) VALUES (?,?)",(h[ii],the_decision))
                     con.commit()
