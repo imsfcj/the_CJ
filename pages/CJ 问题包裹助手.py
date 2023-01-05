@@ -1061,7 +1061,7 @@ if bt1 :
     '''
     df = pd.read_sql (rq, con)
     df_xlsx = to_excel(df)
-    main_container.download_button(label='📥 下载来着CJ三号的建议',
+    main_container.download_button(label='📥 下载来着CJ四号的建议',
                                     data=df_xlsx ,
                                     file_name= 'Auto_Recommendation.xlsx')
 #
