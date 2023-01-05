@@ -666,6 +666,8 @@ if bt1 :
                     con.commit()
             else :
                 if driver_scan_id[0] != 'N/A' :
+                    st.write(driver_scan_time[0])
+                    st.write(the_time)
                     if driver_scan_time[0] > the_time :
                         the_decision = '未定责需确认，由扫描司机' + str(driver_scan_id[0]) +'赔付；时间' + str(datetime.fromtimestamp(driver_scan_time[0]).strftime('%Y-%m-%d %H:%M:%S'))
                         cur.execute("INSERT INTO Final_Decision (Tno,Recommendation) VALUES (?,?)",(h[ii],the_decision))
