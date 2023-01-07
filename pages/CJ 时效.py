@@ -47,7 +47,7 @@ if bt1 :
         if 'DELIVERED' not in jss['data'][driver].keys():
             zero_list = zero_list + str(driver) + '/'
             fail_list = fail_list + str(driver) + '/'
-            st.write(str(driver),0)
+            st.write(str(driver),0,jss['data'][driver]['total'])
             continue
         d_percent = jss['data'][driver]['DELIVERED'] / jss['data'][driver]['total']
         if d_percent < 0.94 :
