@@ -52,7 +52,7 @@ if bt1 :
         d_percent = jss['data'][driver]['DELIVERED'] / jss['data'][driver]['total']
         if d_percent < 0.94 :
             d_percent = d_percent * 100
-            st.write(driver,round(d_percent,2))
+            st.write(driver,round(d_percent,2),jss['data'][driver]['total'])
             fail_list = fail_list + str(driver) + '/'
 
         #st.subheader(driver)
